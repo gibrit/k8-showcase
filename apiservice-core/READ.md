@@ -2,6 +2,7 @@ Apiservice-core is a library that creates realtime apis for K8S .
 
 
 Api Service core is a library that create  simple rest api  with routes
+
     -eventbus : GET /api/{:entity-name}/eventbus
     -list :  GET /api/{:entity-name}
     -realtimeQuery :  GET /api/{:entity-name}/live
