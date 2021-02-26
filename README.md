@@ -1,7 +1,7 @@
 # k8s-showcase for Mehmet Arziman 
 This showcase contains 3 parts . 
 
-1. <a href="apiservice-core/">Apiservice-core</a>  is  core of Api Server 
+1. <a href="apiservice-core/README.md">Apiservice-core</a>  is  core of Api Server 
 2. users-service is a simple user api  implentation of  apiservice-core 
 3. front-end  app
 
