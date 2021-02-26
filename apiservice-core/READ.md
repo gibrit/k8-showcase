@@ -20,9 +20,9 @@ Based on all properties of  UserTable.class can be filtered  based on enum class
 
 we had common filters equal , not , in , not_in . and additional filters  for String like , not_like  or   for Integers min and max filters.
 
-for example let's  make a filter for UserTable.class   username  is not equal "saltuk" , age equals  30  , id is minimum than 35 ,  email is like ( contains) gmail 
+for example let's  make a filter for UserTable.class   username  is not equal "saltuk" , age equals  30  , id is minimum than 35 ,  email is like ( contains) gmail, this request to api returns an
 
-this request to api returns an GET /api/users/?name-not=saltuk&age=30&id-min=35&email-like=gmail&pg_offset=0&pg_limit=20
+    GET /api/users/?name-not=saltuk&age=30&id-min=35&email-like=gmail&pg_offset=0&pg_limit=20
 
 ApiResult.java instance as a json  result. 
 
