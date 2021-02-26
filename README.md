@@ -10,7 +10,8 @@ How to run  :
 Uses microk8s
 
 use "build.sh"   deploy  hazelcast , redis , service database 
-use "start.sh" to start  services like users blogs 
+use "deploy.sh" to start deploy services
+
 after if it is deployed  to k8s 
 
 please access localhost/index.html for  frontend-app. 
