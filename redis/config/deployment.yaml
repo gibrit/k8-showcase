@@ -1,0 +1,29 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: user-service-redis-db
+  labels:
+    app: user-service-redis-db
+spec:
+  selector:
+    matchLabels:
+      app: user-service-redis-db
+      role: master
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-service-redis-db
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: master
+        image: k8s.gcr.io/redis:e2e  # or just image: redis
+        resources:
+          requests:
+            cpu: 100m
+            memory: 150Mi
+        ports:
+        - containerPort: 6379

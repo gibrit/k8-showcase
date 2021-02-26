@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+data:  
+  keep_alive: true 
+  no_delay: true 
+  mastername: mymaster
+  role: master
+  slaves: never

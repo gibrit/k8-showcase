@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+data:
+  name: user-service
+  db: user-db-service
+  endpoint: /v1/categories
+  has_parent: "false"
+  alias: categories
+  type: api
+  version: v1
+  debug: ""
+

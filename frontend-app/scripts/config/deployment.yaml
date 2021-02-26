@@ -1,0 +1,22 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: frontend-app-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-app-service
+  template:
+    metadata:
+      labels:
+        app: frontend-app-service
+    spec:
+      containers:
+        - name: frontend-app-service
+          image: saltuk-kubernetes/frontend-app-service:latest
+          imagePullPolicy: Never
+      volumes:
+        - name: frontend-app-service-volume
+          persistentVolumeClaim:
+            claimName: frontend-app-service-volume-claim

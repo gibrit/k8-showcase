@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>RealTime Filter Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://unpkg.io/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+    <script src='https://unpkg.io/@vertx/eventbus-bridge-client.js@1.0.0-1/vertx-eventbus.js'></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="container" id="app">
+        <div class="row">
+            <div class="col-12">
+                <h2>Realtime Filter</h2>
+                <div class="detail">
+                    <p> This page is live query example based on runned filter.</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 pb50">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="filters-create">
+                            <h3>Add Filters</h3>
+                            <div class="mb-3">
+                                <h5 for="exampleFormControlInput1" class="form-label m3">Id Filters</h5>
+                                <div class="input-group" id="id-filter">
+                                    <input name="value" type="text" placeholder="Value"
+                                        class="form-control col-8 filter-value" aria-label="Id">
+                                    <select name="filter" class="form-select col-2 filter-type"
+                                        aria-label="Filter Type">
+                                        <option selected value="">Equal</option>
+                                        <option value="-not">Not Equal</option>
+                                        <option value="-in">In</option>
+                                        <option value="-not_in"> Not In</option>
+                                        <option value="-max">Max</option>
+                                        <option value="-min">Min</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary col-1 add-filter" data-filter-type="id"
+                                        type="button">+</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h5 for="exampleFormControlInput1" class="form-label m3">Name Filters</h5>
+                                <div class="input-group" id="name-filter">
+                                    <input name="value" type="text" placeholder="Value"
+                                        class="form-control col-8 filter-value" aria-label="Id">
+                                    <select name="filter" class="form-select col-2 filter-type"
+                                        aria-label="Filter Type">
+                                        <option selected value="">Equal</option>
+                                        <option value="-not">Not Equal</option>
+                                        <option value="-in">In</option>
+                                        <option value="-not_in"> Not In</option>
+                                        <option value="-like">like</option>
+                                        <option value="-not_like">Not like</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary col-1 add-filter" data-filter-type="name"
+                                        type="button">+</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h5 for="exampleFormControlInput1" class="form-label m3">Username Filters</h5>
+                                <div class="input-group" id="username-filter">
+                                    <input type="text" name="value" placeholder="Value"
+                                        class="form-control col-8 filter-value" aria-label="Id">
+                                    <select name="filter" class="form-select col-2 filter-type"
+                                        aria-label="Filter Type">
+                                        <option selected value="">Equal</option>
+                                        <option value="-not">Not Equal</option>
+                                        <option value="-in">In</option>
+                                        <option value="-not_in"> Not In</option>
+                                        <option value="-like">like</option>
+                                        <option value="-not_like">Not like</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary col-1 add-filter"
+                                        data-filter-type="username" type="button">+</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h5 for="exampleFormControlInput1" class="form-label m3">Email Filters</h5>
+                                <div class="input-group" id="email-filter">
+                                    <input type="text" name="value" placeholder="Value"
+                                        class="form-control col-8 filter-value" aria-label="Id">
+                                    <select name="filter" class="form-select col-2 filter-type"
+                                        aria-label="Filter Type">
+                                        <option selected value="">Equal</option>
+                                        <option value="-not">Not Equal</option>
+                                        <option value="-in">In</option>
+                                        <option value="-not_in"> Not In</option>
+                                        <option value="-like">like</option>
+                                        <option value="-not_like">Not like</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary col-1 add-filter" data-filter-type="email"
+                                        type="button">+</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h5 for="exampleFormControlInput1" class="form-label m3">Password Filters</h5>
+                                <div class="input-group" id="password-filter">
+                                    <input type="text" name="value" placeholder="Value"
+                                        class="form-control col-8 filter-value" aria-label="Id">
+                                    <select name="filter" class="form-select col-2 filter-type"
+                                        aria-label="Filter Type">
+                                        <option selected value="">Equal</option>
+                                        <option value="-not">Not Equal</option>
+                                        <option value="-in">In</option>
+                                        <option value="-not_in"> Not In</option>
+                                        <option value="-like">like</option>
+                                        <option value="-not_like">Not like</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary col-1 add-filter"
+                                        data-filter-type="password" type="button">+</button>
+                                </div>
+                            </div>
+                            <div class="mb-3 filter-input">
+                                <h5 for="exampleFormControlInput1" class="form-label m3">Age Filters</h5>
+                                <div class="input-group" id="age-filter">
+                                    <input type="text" name="value" placeholder="Value"
+                                        class="form-control col-8 filter-value" aria-label="Id">
+                                    <select name="filter" class="form-select col-2 filter-type"
+                                        aria-label="Filter Type">
+                                        <option selected value="">Equal</option>
+                                        <option value="-not">Not Equal</option>
+                                        <option value="-in">In</option>
+                                        <option value="-not_in"> Not In</option>
+                                        <option value="-max">Max</option>
+                                        <option value="-min">Min</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary col-1 add-filter" data-filter-type="age"
+                                        type="button">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h3>Filters</h3>
+                        <div class="pagination-filter">
+                            <h3>Pagination</h3>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Offset</span>
+                                <input type="text" value="0" class="form-control" name="pg_offset" placeholder="Offset">
+                                <span class="input-group-text">Limit</span>
+                                <input type="text" value="20" class="form-control" name="pg_limit" placeholder="Limit">
+                            </div>
+                        </div>
+                        <div class="filter">
+                            <button type="button" class="btn btn-primary" id="run-live-filter">
+                                Run Filter
+                            </button>
+                            <button type="button" class="btn btn-primary" id="reset-live-filter">
+                                Reset Filter
+                            </button>
+                        </div>
+                        <div class="filter-lists">
+                            <ul id="filter-list">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-9">
+                <div class="row">
+                    <div class="data-layout">
+                        <div class="actions">
+                        </div>
+                        <div class="data-list">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Age</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="scripts/live.js"></script>
+    <script>
+
+        $(function () {
+
+            // create jSaltuk Instance
+            var jSaltukInstance = new $.jSaltuk($('#app'), {});
+            jSaltukInstance.connect(() => {
+                jSaltukInstance.runLive();
+            });
+        });
+
+    </script>
+</body>
+
+</html>

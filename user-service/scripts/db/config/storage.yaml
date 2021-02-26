@@ -1,0 +1,29 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: user-db-service-volume
+  labels:
+    type: local
+    app: user-db-service
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/gibrit_resources/cop/k8s/postgresql-latest/user-db"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: user-db-service-volume-claim
+  labels:
+    app: user-db-service
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi

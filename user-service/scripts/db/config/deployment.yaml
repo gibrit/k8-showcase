@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: user-db-service
+spec:
+  serviceName: "user-db-service"
+  selector:
+    matchLabels:
+      app: user-db-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-db-service
+    spec:
+       containers:
+        - name: user-db-service
+          image: postgres:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-service-config
+                  key: database_name
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-service-config
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-service-config
+                  key: password
+          volumeMounts:
+            - mountPath: /mnt/gibrit_resources/cop/k8s/postgresql-latest/user-db
+              name: user-db-service
+       volumes:
+        - name: user-db-service
+          persistentVolumeClaim:
+            claimName: user-db-service-volume-claim
+

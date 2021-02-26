@@ -1,0 +1,29 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: user-service-volume
+  labels:
+    type: local
+    app: user-service
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: " /mnt/gibrit_resources/cop/k8s/"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: user-service-volume-claim
+  labels:
+    app: user-service
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Mi
